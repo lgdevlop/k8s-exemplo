@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: k8s-exemplo-go
+  name: k8s-exemplo-go
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: k8s-exemplo-go
+  template:
+    metadata:
+      labels:
+        app: k8s-exemplo-go
+    spec:
+      containers:
+      - name: k8s-exemplo-go
+        image: lgdevlop/k8s-exemplo-go:1.0.0
+        ports:
+        - containerPort: 8000
+        resources:
+          requests:
+            cpu: "200m"
+            memory: "100Mi"
+          limits:
+            cpu: "250m"
+            memory: "200Mi"
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: k8s-exemplo-go-service
+  name: k8s-exemplo-go-service
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 8000
+  selector:
+    app: k8s-exemplo-go

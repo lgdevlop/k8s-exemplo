@@ -1,0 +1,22 @@
+steps:
+
+  - id: "Rodando teste unitário"
+    name: 'golang'
+    env:
+      - 'GOPATH=/workspace'
+    entrypoint: '/bin/sh'
+    args:
+      - '-c'
+      - |
+        mkdir -p src/github.com/lgdevlop/k8s-exemplo/go;
+        cp go/hello.go src/github.com/lgdevlop/k8s-exemplo/go;
+        cp -r go/message src/github.com/lgdevlop/k8s-exemplo/go;
+        go test ./...
+
+  - id: "Criando imagem do Dockerfile"
+    name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'gcr.io/$PROJECT_ID/k8s-exemplo-go:$SHORT_SHA', '-f', 'go/.docker/Dockerfile', '.']
+  
+  - id: "Subindo imagem"
+    name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'gcr.io/$PROJECT_ID/k8s-exemplo-go:$SHORT_SHA']
