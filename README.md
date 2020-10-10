@@ -1,7 +1,7 @@
 K8S-Exemplo
 ===================
 
-> Repositório de teste para containerização, deploy no kubernetes e CI/CD usando Google CloudBuild.
+> Repositório de teste para *containerização, deploy no kubernetes e CI/CD usando Google CloudBuild*.
 
 ## Imagem Hello World feita em Golang
 
